@@ -1,6 +1,6 @@
 package learn.data;
 
-import learn.model.Appointment;
+import learn.models.Appointment;
 
 import java.util.List;
 

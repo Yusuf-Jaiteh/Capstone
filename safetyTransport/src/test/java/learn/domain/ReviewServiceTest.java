@@ -1,8 +1,7 @@
 package learn.domain;
 
-import learn.data.ReviewJdbcTemplateRepository;
 import learn.data.ReviewsRepository;
-import learn.model.Reviews;
+import learn.models.Reviews;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

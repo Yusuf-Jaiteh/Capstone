@@ -1,6 +1,6 @@
 package learn.data.mappers;
 
-import learn.model.Reviews;
+import learn.models.Reviews;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

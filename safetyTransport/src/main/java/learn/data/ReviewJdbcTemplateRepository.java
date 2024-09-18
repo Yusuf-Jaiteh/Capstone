@@ -1,9 +1,7 @@
 package learn.data;
 
-import learn.data.mappers.AppointmentMapper;
 import learn.data.mappers.ReviewMapper;
-import learn.model.Appointment;
-import learn.model.Reviews;
+import learn.models.Reviews;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;

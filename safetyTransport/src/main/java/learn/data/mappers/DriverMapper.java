@@ -1,6 +1,6 @@
 package learn.data.mappers;
 
-import learn.model.Driver;
+import learn.models.Driver;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

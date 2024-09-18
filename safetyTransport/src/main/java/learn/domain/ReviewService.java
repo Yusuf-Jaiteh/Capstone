@@ -1,8 +1,7 @@
 package learn.domain;
 
 import learn.data.ReviewsRepository;
-import learn.model.Reviews;
-import org.springframework.jdbc.core.JdbcTemplate;
+import learn.models.Reviews;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

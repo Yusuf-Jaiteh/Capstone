@@ -2,7 +2,7 @@ package learn.data;
 
 import learn.data.mappers.AppointmentMapper;
 import learn.data.mappers.CustomerMapper;
-import learn.model.Customer;
+import learn.models.Customer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;

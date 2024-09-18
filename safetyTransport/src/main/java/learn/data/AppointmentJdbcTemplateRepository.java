@@ -1,6 +1,6 @@
 package learn.data;
 
-import learn.model.Appointment;
+import learn.models.Appointment;
 import learn.data.mappers.AppointmentMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;

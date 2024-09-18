@@ -2,7 +2,7 @@ package learn.data;
 
 import learn.data.mappers.AppointmentMapper;
 import learn.data.mappers.DriverMapper;
-import learn.model.Driver;
+import learn.models.Driver;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;

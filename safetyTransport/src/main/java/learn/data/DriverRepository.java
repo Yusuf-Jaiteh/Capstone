@@ -1,6 +1,6 @@
 package learn.data;
 
-import learn.model.Driver;
+import learn.models.Driver;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package learn.domain;
 
 import learn.data.CustomerRepository;
-import learn.model.Customer;
+import learn.models.Customer;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

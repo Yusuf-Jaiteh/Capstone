@@ -1,6 +1,6 @@
 package learn.data;
 
-import learn.model.Customer;
+import learn.models.Customer;
 
 import java.util.List;
 

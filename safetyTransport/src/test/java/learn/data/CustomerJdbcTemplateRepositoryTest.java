@@ -1,6 +1,6 @@
 package learn.data;
 
-import learn.model.Customer;
+import learn.models.Customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package learn.domain;
 
 import learn.data.AppointmentRepository;
-import learn.model.Appointment;
+import learn.models.Appointment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

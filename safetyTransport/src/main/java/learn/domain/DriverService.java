@@ -1,7 +1,7 @@
 package learn.domain;
 
 import learn.data.DriverRepository;
-import learn.model.Driver;
+import learn.models.Driver;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

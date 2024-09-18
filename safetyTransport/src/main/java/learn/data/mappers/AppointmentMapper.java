@@ -1,6 +1,6 @@
 package learn.data.mappers;
 
-import learn.model.Appointment;
+import learn.models.Appointment;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

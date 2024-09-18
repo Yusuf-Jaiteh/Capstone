@@ -1,6 +1,6 @@
 package learn.data;
 
-import learn.model.Reviews;
+import learn.models.Reviews;
 
 import java.util.List;
 
