@@ -2,9 +2,11 @@ package learn.domain;
 
 import learn.data.CustomerRepository;
 import learn.model.Customer;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CustomerService {
     private final CustomerRepository repository;
 
@@ -23,6 +25,10 @@ public class CustomerService {
     public Result<Customer> add(Customer customer) {
         Result<Customer> result = validate(customer);
 
+        if (customer.getCustomerId() != 0) {
+            result.addMessage("Customer ID must be 0.", ResultType.INVALID);
+        }
+
         if (!result.isSuccess()) {
             return result;
         }
@@ -34,13 +40,17 @@ public class CustomerService {
    public Result<Customer> update(Customer customer) {
         Result<Customer> result = validate(customer);
 
+        if (customer.getCustomerId() <= 0) {
+            result.addMessage("Customer ID must be set.", ResultType.INVALID);
+        }
+
         if (!result.isSuccess()) {
             return result;
         }
 
         boolean success = repository.update(customer);
         if (!success) {
-            result.addErrorMessage("Customer ID " + customer.getCustomerId() + " not found.");
+            result.addMessage("Customer ID " + customer.getCustomerId() + " not found.", ResultType.NOT_FOUND);
         } else {
             result.setPayload(customer);
         }
@@ -51,13 +61,18 @@ public class CustomerService {
     public Result<Customer> deleteById(Customer customer) {
         Result<Customer> result = new Result<>();
         if (customer == null) {
-            result.addErrorMessage("Customer cannot be null.");
+            result.addMessage("Customer cannot be null.", ResultType.INVALID);
             return result;
         }
 
-        if (!repository.deleteById(customer.getCustomerId())) {
-            result.addErrorMessage("Customer ID " + customer.getCustomerId() + " not found.");
+        if (customer.getCustomerId() <= 0) {
+            result.addMessage("Customer ID must be set.", ResultType.INVALID);
         }
+
+        if (!repository.deleteById(customer.getCustomerId())) {
+            result.addMessage("Customer ID " + customer.getCustomerId() + " not found.", ResultType.NOT_FOUND);
+        }
+
         return result;
     }
 
@@ -65,28 +80,25 @@ public class CustomerService {
         Result<Customer> result = new Result<>();
 
         if (customer == null) {
-            result.addErrorMessage("Customer cannot be null.");
+            result.addMessage("Customer cannot be null.", ResultType.INVALID);
             return result;
         }
 
-        if (customer.getCustomerId() != 0) {
-            result.addErrorMessage("Customer ID must be 0.");
-        }
 
         if (customer.getFirstName() == null || customer.getFirstName().isBlank()) {
-            result.addErrorMessage("First name is required.");
+            result.addMessage("First name is required.", ResultType.INVALID);
         }
 
         if (customer.getLastName() == null || customer.getLastName().isBlank()) {
-            result.addErrorMessage("Last name is required.");
+            result.addMessage("Last name is required.", ResultType.INVALID);
         }
 
         if (customer.getEmail() == null || customer.getEmail().isBlank()) {
-            result.addErrorMessage("Email is required.");
+            result.addMessage("Email is required.", ResultType.INVALID);
         }
 
         if (customer.getPhoneNumber() == null || customer.getPhoneNumber().isBlank()) {
-            result.addErrorMessage("Phone is required.");
+            result.addMessage("Phone Number is required.", ResultType.INVALID);
         }
 
         return result;

@@ -8,7 +8,7 @@ public class Appointment {
     private boolean approved;
     private String pickUpLocation;
     private String dropOffLocation;
-
+    //startTime,endTime
     public Appointment() {
     }
 

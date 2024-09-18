@@ -1,6 +1,8 @@
 package learn.data;
 
+import learn.data.mappers.AppointmentMapper;
 import learn.data.mappers.ReviewMapper;
+import learn.model.Appointment;
 import learn.model.Reviews;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -41,6 +43,25 @@ public class ReviewJdbcTemplateRepository implements ReviewsRepository {
             """;
 
         return jdbcTemplate.query(sql, new ReviewMapper());
+    }
+
+    @Override
+    public List<Reviews> findByCustomerId(int customerId) {
+        final String sql = """
+                select * from reviews
+                where customer_id = ?
+                """;
+        return jdbcTemplate.query(sql, new ReviewMapper(), customerId);
+    }
+
+    @Override
+    public List<Reviews> findByDriverId(int driverId) {
+
+        final String sql = """
+            select * from reviews
+            where driver_id = ?
+            """;
+        return jdbcTemplate.query(sql, new ReviewMapper(), driverId);
     }
 
     @Override

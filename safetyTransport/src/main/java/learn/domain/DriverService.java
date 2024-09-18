@@ -2,9 +2,11 @@ package learn.domain;
 
 import learn.data.DriverRepository;
 import learn.model.Driver;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DriverService {
     private final DriverRepository repository;
 
@@ -23,6 +25,10 @@ public class DriverService {
     public Result<Driver> add(Driver driver) {
         Result<Driver> result = validate(driver);
 
+        if (driver.getDriverId() != 0) {
+            result.addMessage("DriverId cannot be set for `add` operation.", ResultType.INVALID);
+        }
+
         if (!result.isSuccess()) {
             return result;
         }
@@ -34,13 +40,17 @@ public class DriverService {
     public Result<Driver> update(Driver driver) {
         Result<Driver> result = validate(driver);
 
+        if (driver.getDriverId() <= 0) {
+            result.addMessage("Driver ID must be set.", ResultType.INVALID);
+        }
+
         if (!result.isSuccess()) {
             return result;
         }
 
         boolean success = repository.update(driver);
         if (!success) {
-            result.addErrorMessage("Driver ID " + driver.getDriverId() + " not found.");
+            result.addMessage("Driver ID " + driver.getDriverId() + " not found.", ResultType.NOT_FOUND);
         } else {
             result.setPayload(driver);
         }
@@ -51,13 +61,18 @@ public class DriverService {
     public Result<Driver> deleteById(Driver driver) {
         Result<Driver> result = new Result<>();
         if (driver == null) {
-            result.addErrorMessage("Driver cannot be null.");
+            result.addMessage("Driver cannot be null.", ResultType.INVALID);
             return result;
         }
 
-        if (!repository.deleteById(driver.getDriverId())) {
-            result.addErrorMessage("Driver ID " + driver.getDriverId() + " not found.");
+        if (driver.getDriverId() <= 0) {
+            result.addMessage("Driver ID must be set.", ResultType.INVALID);
         }
+
+        if (!repository.deleteById(driver.getDriverId())) {
+            result.addMessage("Driver ID " + driver.getDriverId() + " not found.", ResultType.NOT_FOUND);
+        }
+
         return result;
     }
 
@@ -65,32 +80,29 @@ public class DriverService {
         Result<Driver> result = new Result<>();
 
         if (driver == null) {
-            result.addErrorMessage("Driver cannot be null.");
+            result.addMessage("Driver cannot be null.", ResultType.INVALID);
             return result;
         }
 
-        if (driver.getDriverId() != 0) {
-            result.addErrorMessage("DriverId cannot be set for `add` operation.");
-        }
 
         if (driver.getFirstName() == null || driver.getFirstName().isBlank()) {
-            result.addErrorMessage("First Name is required.");
+            result.addMessage("First Name is required.", ResultType.INVALID);
         }
 
         if (driver.getLastName() == null || driver.getLastName().isBlank()) {
-            result.addErrorMessage("Last Name is required.");
+            result.addMessage("Last Name is required.", ResultType.INVALID);
         }
 
         if (driver.getLicenseNumber() == null || driver.getLicenseNumber().isBlank()) {
-            result.addErrorMessage("License Number is required.");
+            result.addMessage("License Number is required.", ResultType.INVALID);
         }
 
         if (driver.getNumberPlate() == null || driver.getNumberPlate().isBlank()) {
-            result.addErrorMessage("Number Plate is required.");
+            result.addMessage("Number Plate is required.", ResultType.INVALID);
         }
 
         if (driver.getEmail() == null || driver.getEmail().isBlank()) {
-            result.addErrorMessage("Email is required.");
+            result.addMessage("Email is required.", ResultType.INVALID);
         }
 
         return result;

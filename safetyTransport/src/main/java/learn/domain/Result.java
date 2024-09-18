@@ -1,21 +1,28 @@
 package learn.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Result<T> {
     private ArrayList<String> messages = new ArrayList<>();
+    private ResultType type = ResultType.SUCCESS;
     private T payload;
 
-    public boolean isSuccess() {
-        return messages.size() == 0;
+    public ResultType getType() {
+        return type;
     }
 
-    public ArrayList<String> getErrorMessages() {
+    public boolean isSuccess() {
+        return type == ResultType.SUCCESS;
+    }
+
+    public List<String> getMessages() {
         return new ArrayList<>(messages);
     }
 
-    public void addErrorMessage(String message) {
+    public void addMessage(String message, ResultType type) {
         messages.add(message);
+        this.type = type;
     }
 
     public T getPayload() {

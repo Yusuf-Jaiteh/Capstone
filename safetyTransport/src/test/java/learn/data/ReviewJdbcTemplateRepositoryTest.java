@@ -40,6 +40,16 @@ class ReviewJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldFindByCustomerId() {
+        assertEquals(1, repository.findByCustomerId(1).size());
+    }
+
+    @Test
+    void shouldFindByDriverId() {
+        assertEquals(1, repository.findByDriverId(3).size());
+    }
+
+    @Test
     void add() {
         Reviews reviews = new Reviews();
         reviews.setReviewText("Test");

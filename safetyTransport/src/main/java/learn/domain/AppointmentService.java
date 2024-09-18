@@ -2,9 +2,11 @@ package learn.domain;
 
 import learn.data.AppointmentRepository;
 import learn.model.Appointment;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AppointmentService {
     private final AppointmentRepository repository;
 
@@ -31,6 +33,10 @@ public class AppointmentService {
     public Result<Appointment> add(Appointment appointment) {
         Result<Appointment> result = validate(appointment);
 
+        if (appointment.getAppointmentId() != 0) {
+            result.addMessage("AppointmentId cannot be set for `add` operation.", ResultType.INVALID);
+        }
+
         if (!result.isSuccess()) {
             return result;
         }
@@ -42,13 +48,17 @@ public class AppointmentService {
     public Result<Appointment> update(Appointment appointment) {
         Result<Appointment> result = validate(appointment);
 
+        if (appointment.getAppointmentId() <= 0) {
+            result.addMessage("AppointmentId must be set.", ResultType.INVALID);
+        }
+
         if (!result.isSuccess()) {
             return result;
         }
 
         boolean success = repository.update(appointment);
         if (!success) {
-            result.addErrorMessage("Appointment ID " + appointment.getAppointmentId() + " not found.");
+            result.addMessage("Appointment ID " + appointment.getAppointmentId() + " not found.", ResultType.NOT_FOUND);
         } else {
             result.setPayload(appointment);
         }
@@ -56,11 +66,20 @@ public class AppointmentService {
         return result;
     }
 
-    public Result<Appointment> deleteById(int id) {
+    public Result<Appointment> deleteById(Appointment appointment) {
         Result<Appointment> result = new Result<>();
 
-        if (!repository.deleteById(id)) {
-            result.addErrorMessage("Appointment ID " + id + " not found.");
+        if (appointment == null) {
+            result.addMessage("Appointment cannot be null.", ResultType.INVALID);
+            return result;
+        }
+
+        if (appointment.getAppointmentId() <= 0) {
+            result.addMessage("AppointmentId must be set", ResultType.INVALID);
+        }
+
+        if (!repository.deleteById(appointment.getAppointmentId())) {
+            result.addMessage("Appointment ID " + appointment.getAppointmentId() + " not found.", ResultType.NOT_FOUND);
         }
 
         return result;
@@ -70,52 +89,24 @@ public class AppointmentService {
         Result<Appointment> result = new Result<>();
 
         if (appointment == null) {
-            result.addErrorMessage("Appointment cannot be null.");
+            result.addMessage("Appointment cannot be null.", ResultType.INVALID);
             return result;
         }
 
-        if (appointment.getAppointmentId() != 0) {
-            result.addErrorMessage("AppointmentId cannot be set for `add` operation.");
-        }
-
         if (appointment.getCustomerId() <= 0) {
-            result.addErrorMessage("CustomerId must be set.");
+            result.addMessage("CustomerId must be set.", ResultType.INVALID);
         }
 
-        if (appointment.getAppointmentDate() == null) {
-            result.addErrorMessage("AppointmentDate must be set.");
+        if (appointment.getPickUpLocation() == null || appointment.getPickUpLocation().isEmpty()) {
+            result.addMessage("Pick Up Location must be set.", ResultType.INVALID);
         }
 
-        if (appointment.getStartTime() == null) {
-            result.addErrorMessage("StartTime must be set.");
+        if (appointment.getDropOffLocation() == null || appointment.getDropOffLocation().isEmpty()) {
+            result.addMessage("Drop off Location must be set.", ResultType.INVALID);
         }
 
-        if (appointment.getEndTime() == null) {
-            result.addErrorMessage("EndTime must be set.");
-        }
-
-        if (appointment.getStartTime().isAfter(appointment.getEndTime())) {
-            result.addErrorMessage("StartTime must be before EndTime.");
-        }
-
-        if (appointment.getLocation() == null) {
-            result.addErrorMessage("Location must be set.");
-        }
-
-        if (appointment.getLocation().getLocationId() <= 0) {
-            result.addErrorMessage("LocationId must be set.");
-        }
-
-        if (appointment.getDriver() == null) {
-            result.addErrorMessage("Driver must be set.");
-        }
-
-        if (appointment.getDriver().getDriverId() <= 0) {
-            result.addErrorMessage("DriverId must be set.");
-        }
-
-        if (appointment.getCost().compareTo(BigDecimal.ZERO) <= 0) {
-            result.addErrorMessage("Cost must be greater than zero.");
+        if (appointment.getDriverId() <= 0) {
+            result.addMessage("DriverId must be set.", ResultType.INVALID);
         }
 
         return result;
