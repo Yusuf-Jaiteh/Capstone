@@ -3,6 +3,7 @@ package learn.data;
 import learn.data.mappers.AppointmentMapper;
 import learn.data.mappers.CustomerMapper;
 import learn.models.Customer;
+import learn.models.Driver;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -57,7 +58,13 @@ public class CustomerJdbcTemplateRepository implements CustomerRepository {
         final String sql = """
             select * from customers
             """;
-        return jdbcTemplate.query(sql, new CustomerMapper());
+        List<Customer> result = jdbcTemplate.query(sql, new CustomerMapper());
+
+        for (Customer customer : result) {
+            addAppointments(customer);
+        }
+
+        return result;
     }
 
     @Override

@@ -1,0 +1,30 @@
+.nav {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+}
+
+.nav-logo {
+    height: 40px;
+    margin-right: 20px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin-left: auto; /* Push the links to the right */
+    padding-right: 50px; /* Add space to the right of the links */
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}

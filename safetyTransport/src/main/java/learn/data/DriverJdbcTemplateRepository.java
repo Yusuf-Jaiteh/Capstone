@@ -56,11 +56,21 @@ public class DriverJdbcTemplateRepository implements DriverRepository {
             select * from drivers
             """;
 
-        return jdbcTemplate.query(sql, new DriverMapper());
+        List<Driver> result = jdbcTemplate.query(sql, new DriverMapper());
+
+        for (Driver driver : result) {
+            addAppointments(driver);
+        }
+
+        return result;
     }
 
     @Override
     public Driver add(Driver driver) {
+
+        if (emailExists(driver.getEmail())) {
+            throw new IllegalArgumentException("Email already exists: " + driver.getEmail());
+        }
 
         final String sql = """
             insert into drivers (first_name, last_name, email, phone_number, license_number, car_model, number_plate)
@@ -86,6 +96,12 @@ public class DriverJdbcTemplateRepository implements DriverRepository {
 
         driver.setDriverId(keyHolder.getKey().intValue());
         return driver;
+    }
+
+    private boolean emailExists(String email) {
+        final String sql = "select count(*) from drivers where email = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, email);
+        return count != null && count > 0;
     }
 
     @Override
