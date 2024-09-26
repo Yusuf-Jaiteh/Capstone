@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
 import './CustomerDashboard.css';
+import Navbar from '../Navbar';
 
 function CustomerDashboard() {
     const { userId, token } = useAuth();
@@ -178,6 +179,7 @@ function CustomerDashboard() {
 
     return (
         <div className="customer-dashboard">
+            <Navbar /> {/* Include Navbar */}
             <header className="dashboard-header">
                 <h1>Customer Dashboard</h1>
             </header>

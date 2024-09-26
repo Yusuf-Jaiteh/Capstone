@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
 import './DriverDashboard.css';
+import Navbar from '../Navbar';
 
 function DriverDashboard() {
     const { userId, token } = useAuth();
@@ -13,7 +14,7 @@ function DriverDashboard() {
 
     useEffect(() => {
         if (userId) {
-            console.log('Driver ID:', userId); // Log the driver ID being used
+            console.log('Driver ID:', userId); 
             fetchAppointments();
         } else {
             setError(new Error("User ID is not available."));
@@ -34,12 +35,10 @@ function DriverDashboard() {
     };
 
     const handleApprove = async (appointmentId) => {
-        // Find the appointment that is being approved
         const appointmentToApprove = appointments.find(app => app.appointmentId === appointmentId);
-        console.log('Appointment to be updated:', appointmentToApprove); // Log the appointment details
+        console.log('Appointment to be updated:', appointmentToApprove); 
 
         try {
-            // Send update request to backend to approve the appointment
             await axios.put(`http://localhost:8080/api/appointment/${appointmentId}`, { appointmentId, ...appointmentToApprove, approved: 1 }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -47,7 +46,7 @@ function DriverDashboard() {
             setAppointments((prevAppointments) =>
                 prevAppointments.map((appointment) =>
                     appointment.appointmentId === appointmentId
-                        ? { ...appointment, approved: 1 } // Update the approved status
+                        ? { ...appointment, approved: 1 }
                         : appointment
                 )
             );
@@ -58,14 +57,12 @@ function DriverDashboard() {
         }
     };
 
-    // Effect to remove the success message after 3 seconds
     useEffect(() => {
         if (successMessage) {
             const timer = setTimeout(() => {
-                setSuccessMessage(''); // Clear success message after 3 seconds
+                setSuccessMessage('');
             }, 3000);
 
-            // Clean up the timer if the component is unmounted or successMessage changes
             return () => clearTimeout(timer);
         }
     }, [successMessage]);
@@ -80,39 +77,52 @@ function DriverDashboard() {
 
     return (
         <div className="driver-dashboard">
+            <Navbar />
             <header className="dashboard-header">
                 <h1>Driver Dashboard</h1>
             </header>
             <div className="dashboard-content">
-                <h2>My Appointments</h2>
-                {successMessage && <div className="success-message">{successMessage}</div>}
-                {appointments.length === 0 && (
-                    <div className="no-appointments-message">
-                        <p>You don't have any appointments yet.</p>
-                    </div>
-                )}
-                <ul>
-                    {appointments.map(appointment => (
-                        <li key={appointment.appointmentId}>
-                            <div><strong>Pickup Location:</strong> {appointment.pickUpLocation}</div>
-                            <div><strong>Dropoff Location:</strong> {appointment.dropOffLocation}</div>
-                            <div><strong>Appointment Date:</strong> {appointment.appointmentDate}</div>
-                            <div><strong>Start Time:</strong> {appointment.startTime}</div>
-                            <div><strong>End Time:</strong> {appointment.endTime}</div>
-                            <div>
-                                <strong>Approved:</strong>
-                                {appointment.approved ? " Yes" : 
-                                    <span 
-                                        onClick={() => handleApprove(appointment.appointmentId)} 
-                                        style={{ cursor: 'pointer', color: 'blue' }}
-                                    >
-                                        No (click to approve)
-                                    </span>
-                                }
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                <div className="dashboard-sidebar">
+                    <nav>
+                        <ul>
+                            <li><a href="#appointments">Appointments</a></li>
+                            <li><a href="#profile">Profile</a></li>
+                            <li><a href="#settings">Settings</a></li>
+                            <li><a href="#view-reviews">View Reviews</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div className="dashboard-main">
+                    <h2>My Appointments</h2>
+                    {successMessage && <div className="success-message">{successMessage}</div>}
+                    {appointments.length === 0 && (
+                        <div className="no-appointments-message">
+                            <p>You don't have any appointments yet.</p>
+                        </div>
+                    )}
+                    <ul>
+                        {appointments.map(appointment => (
+                            <li key={appointment.appointmentId}>
+                                <div><strong>Pickup Location:</strong> {appointment.pickUpLocation}</div>
+                                <div><strong>Dropoff Location:</strong> {appointment.dropOffLocation}</div>
+                                <div><strong>Appointment Date:</strong> {appointment.appointmentDate}</div>
+                                <div><strong>Start Time:</strong> {appointment.startTime}</div>
+                                <div><strong>End Time:</strong> {appointment.endTime}</div>
+                                <div>
+                                    <strong>Approved:</strong>
+                                    {appointment.approved ? " Yes" : 
+                                        <span 
+                                            onClick={() => handleApprove(appointment.appointmentId)} 
+                                            style={{ cursor: 'pointer', color: 'blue' }}
+                                        >
+                                            No (click to approve)
+                                        </span>
+                                    }
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </div>
     );

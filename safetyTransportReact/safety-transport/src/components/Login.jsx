@@ -1,12 +1,14 @@
+// Login.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import './Login.css';
 
+
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useAuth(); // Get the login function from AuthContext
+    const { login } = useAuth();
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -22,18 +24,11 @@ function Login() {
             });
 
             const result = await response.json();
-            console.log('API Response:', result);
 
             if (response.ok) {
-                // Extract token, userId, and role from the response
-                const { jwt, userId, role } = result; // Ensure that role is fetched from the API response
-                console.log('User ID:', userId);
-                console.log('User Role:', role); // Log the user role
-
-                // Call the login function to store the token, userId, and role
+                const { jwt, userId, role } = result;
                 login(jwt, userId, role);
                 
-                // Redirect based on role
                 if (role === 'customer') {
                     navigate('/customer-dashboard');
                 } else if (role === 'driver') {

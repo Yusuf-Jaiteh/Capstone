@@ -3,15 +3,15 @@ import './HeroSection.css';
 
 const slides = [
   {
-    image: '.gg/hero1.png',
+    image: './this2.jpg',
     text: 'Experience the best ride of your life',
   },
   {
-    image: './hero2.png',
+    image: './this.jpg',
     text: 'Safety and comfort are our priorities',
   },
   {
-    image: './hero3.png',
+    image: './this1.jpg',
     text: 'Travel with confidence and ease',
   },
 ];
@@ -29,7 +29,13 @@ function HeroSection() {
   return (
     <div
       className="hero-container"
-      style={{ backgroundImage: `url(${slides[currentSlide].image})` }}
+      style={{ 
+        backgroundImage: `url(${slides[currentSlide].image})`, 
+        height: '80vh', 
+        width: '100%', 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center' 
+      }}
     >
       <div className="hero-text">
         <h1>{slides[currentSlide].text}</h1>
