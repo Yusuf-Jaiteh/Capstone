@@ -179,7 +179,7 @@ function CustomerDashboard() {
 
     return (
         <div className="customer-dashboard">
-            <Navbar /> {/* Include Navbar */}
+            <Navbar /> 
             <header className="dashboard-header">
                 <h1>Customer Dashboard</h1>
             </header>
@@ -198,10 +198,9 @@ function CustomerDashboard() {
                     <section className="appointments-section" id="appointments">
                         <h2>My Appointments</h2>
                         
-                        {/* Success message */}
                         {successMessage && <div className="success-message">{successMessage}</div>}
 
-                        {/* No appointments message */}
+                        
                         {appointments.length === 0 && !loading && !error && (
                             <div className="no-appointments-message">
                                 <p>You don't have any appointments yet. Please add one.</p>
@@ -226,47 +225,49 @@ function CustomerDashboard() {
                 </main>
             </div>
 
+            
             {/* Appointment Form Modal */}
-            {showForm && (
-                <div className="form-modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={() => setShowForm(false)}>&times;</span>
-                        <h2>{editMode ? 'Edit Appointment' : 'Add New Appointment'}</h2>
-                        <form onSubmit={handleSubmit}>
-                            <label>
-                                Pickup Location:
-                                <input type="text" name="pickUpLocation" value={newAppointment.pickUpLocation} onChange={handleChange} required />
-                            </label>
-                            <label>
-                                Dropoff Location:
-                                <input type="text" name="dropOffLocation" value={newAppointment.dropOffLocation} onChange={handleChange} required />
-                            </label>
-                            <label>
-                                Appointment Date:
-                                <input type="date" name="appointmentDate" value={newAppointment.appointmentDate} onChange={handleChange} required />
-                            </label>
-                            <label>
-                                Start Time:
-                                <input type="time" name="startTime" value={newAppointment.startTime} onChange={handleChange} required />
-                            </label>
-                            <label>
-                                End Time:
-                                <input type="time" name="endTime" value={newAppointment.endTime} onChange={handleChange} required />
-                            </label>
-                            <label>
-                                Driver:
-                                <select name="driverId" value={newAppointment.driverId} onChange={handleChange} required>
-                                    <option value="">Select a driver</option>
-                                    {drivers.map(driver => (
-                                        <option key={driver.driverId} value={driver.driverId}>{driver.firstName}</option>
-                                    ))}
-                                </select>
-                            </label>
-                            <button type="submit">{editMode ? 'Update' : 'Add'}</button>
-                        </form>
-                    </div>
-                </div>
-            )}
+{showForm && (
+    <div className="form-modal">
+        <div className="modal-content">
+            <span className="close" onClick={() => setShowForm(false)}>&times;</span>
+            <h2>{editMode ? 'Edit Appointment' : 'Add New Appointment'}</h2>
+            <form onSubmit={handleSubmit} className="appointment-form">
+                <label>
+                    Pickup Location:
+                    <input type="text" name="pickUpLocation" value={newAppointment.pickUpLocation} onChange={handleChange} required />
+                </label>
+                <label>
+                    Dropoff Location:
+                    <input type="text" name="dropOffLocation" value={newAppointment.dropOffLocation} onChange={handleChange} required />
+                </label>
+                <label>
+                    Appointment Date:
+                    <input type="date" name="appointmentDate" value={newAppointment.appointmentDate} onChange={handleChange} required />
+                </label>
+                <label>
+                    Start Time:
+                    <input type="time" name="startTime" value={newAppointment.startTime} onChange={handleChange} required />
+                </label>
+                <label>
+                    End Time:
+                    <input type="time" name="endTime" value={newAppointment.endTime} onChange={handleChange} required />
+                </label>
+                <label>
+                    Driver:
+                    <select name="driverId" value={newAppointment.driverId} onChange={handleChange} required>
+                        <option value="">Select a driver</option>
+                        {drivers.map(driver => (
+                            <option key={driver.driverId} value={driver.driverId}>{driver.firstName}</option>
+                        ))}
+                    </select>
+                </label>
+                <button type="submit">{editMode ? 'Update' : 'Add'}</button>
+            </form>
+        </div>
+    </div>
+)}
+
 
             {/* Confirmation Modal */}
             {showConfirm && (
@@ -283,7 +284,7 @@ function CustomerDashboard() {
                             <strong>End Time:</strong> {appointmentToConfirm.endTime}<br />
                         </div>
                         <button onClick={confirmSubmit}>{editMode ? 'Update Appointment' : 'Add Appointment'}</button>
-                        <button onClick={() => setShowConfirm(false)}>Cancel</button>
+                        <button className="cancel" onClick={() => setShowConfirm(false)}>Cancel</button>
                     </div>
                 </div>
             )}

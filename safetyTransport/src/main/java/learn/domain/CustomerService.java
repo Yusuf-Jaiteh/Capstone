@@ -93,10 +93,6 @@ public class CustomerService {
             result.addMessage("Last name is required.", ResultType.INVALID);
         }
 
-        if (customer.getEmail() == null || customer.getEmail().isBlank()) {
-            result.addMessage("Email is required.", ResultType.INVALID);
-        }
-
         if (customer.getPhoneNumber() == null || customer.getPhoneNumber().isBlank()) {
             result.addMessage("Phone Number is required.", ResultType.INVALID);
         }
@@ -109,9 +105,6 @@ public class CustomerService {
             result.addMessage("Date of Birth cannot be in the future.", ResultType.INVALID);
         }
 
-        if (customer.getGender() == null || customer.getGender().isBlank()) {
-            result.addMessage("Gender is required.", ResultType.INVALID);
-        }
 
         return result;
     }

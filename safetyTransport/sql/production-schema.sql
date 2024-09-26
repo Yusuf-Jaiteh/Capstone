@@ -7,10 +7,10 @@ create table customers(
 	customer_id int auto_increment primary key,
 	first_name varchar(50) not null,
     last_name varchar(50) not null,
-    email varchar(100) unique not null,
+    email varchar(100) ,
     phone_number varchar(20) not null,
     dob date not null,
-    gender varchar(10) not null
+    gender varchar(10) 
 );
 
 create table drivers(
@@ -66,10 +66,7 @@ create table app_user (
     authority varchar(50) not null
 );
 
-insert into app_user (username, password_hash, authority) values
-	('user', '$2a$10$8DlmRK86p1.SROHo3DbNDegxZJ03vsrvP9xfqOCPsDcu6Wl5zrKIW', 'USER'),
-    ('admin', '$2a$10$p/EhpWSu2VJC/MxrDwI9AOQN5qujvV9h5ypEU.NJTzUT4Bc9689t.', 'ADMIN'),
-    ('public', '$2a$10$9qPwgPqbFG9dhk2PNA0ZK.wGHM36rDi5O6l/Z5lncIzDHvqB4EOCG', '');
+
     
 
 

@@ -150,6 +150,16 @@ button:hover {
     box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
 }
 
+/* Cancel Button Styles */
+button.cancel {
+    background-color: blue; /* Change to blue */
+    margin-top: 10px; /* Add space above */
+}
+
+button.cancel:hover {
+    background-color: darkblue; /* Darker blue on hover */
+}
+
 /* Modal Styles */
 .form-modal, .confirm-modal {
     position: fixed;
@@ -165,12 +175,16 @@ button:hover {
 
 .modal-content {
     background-color: white;
-    margin: 5% auto;
+    margin: 0; /* Remove margin to make full width and height */
     padding: 30px;
     border: 1px solid #888;
-    border-radius: 8px;
-    width: 70%;
+    border-radius: 0; /* Remove border radius for full screen look */
+    width: 100%; /* Make modal content full width */
+    height: 100%; /* Make modal content full height */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Center content vertically */
 }
 
 /* Close Button */
@@ -221,3 +235,36 @@ button:hover {
         width: 90%;
     }
 }
+
+/* Form Styles */
+.appointment-form {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack elements vertically */
+    gap: 15px; /* Space between form elements */
+}
+
+.appointment-form label {
+    display: flex; /* Use flex for label and input */
+    flex-direction: column; /* Stack label and input vertically */
+    font-size: 1rem; /* Font size for labels */
+}
+
+.appointment-form input, 
+.appointment-form select {
+    padding: 10px; /* Add padding for inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem; /* Consistent font size */
+    transition: border-color 0.3s; /* Transition for border color */
+}
+
+.appointment-form input:focus, 
+.appointment-form select:focus {
+    border-color: #4CAF50; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+button {
+    align-self: flex-start; /* Align button to the left */
+}
+
