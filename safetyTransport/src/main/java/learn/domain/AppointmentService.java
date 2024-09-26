@@ -37,6 +37,10 @@ public class AppointmentService {
             result.addMessage("AppointmentId cannot be set for `add` operation.", ResultType.INVALID);
         }
 
+        if (!repository.findByDriverIdAndDateAndTime(appointment.getDriverId(), appointment.getAppointmentDate(), appointment.getStartTime(), appointment.getEndTime()).isEmpty()) {
+            result.addMessage("Driver already has an appointment at the same date and time.", ResultType.INVALID);
+        }
+
         if (!result.isSuccess()) {
             return result;
         }
@@ -108,6 +112,16 @@ public class AppointmentService {
         if (appointment.getDriverId() <= 0) {
             result.addMessage("DriverId must be set.", ResultType.INVALID);
         }
+
+        if(appointment.getStartTime().isAfter(appointment.getEndTime())) {
+            result.addMessage("Start time must be before end time.", ResultType.INVALID);
+        }
+
+        if(appointment.getAppointmentDate().isBefore(java.time.LocalDate.now())) {
+            result.addMessage("Appointment date must be in the future.", ResultType.INVALID);
+        }
+
+
 
         return result;
     }

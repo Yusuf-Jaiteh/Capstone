@@ -101,6 +101,18 @@ public class CustomerService {
             result.addMessage("Phone Number is required.", ResultType.INVALID);
         }
 
+        if (customer.getDob() == null) {
+            result.addMessage("Date of Birth is required.", ResultType.INVALID);
+        }
+
+        if (customer.getDob() != null && customer.getDob().isAfter(java.time.LocalDate.now())) {
+            result.addMessage("Date of Birth cannot be in the future.", ResultType.INVALID);
+        }
+
+        if (customer.getGender() == null || customer.getGender().isBlank()) {
+            result.addMessage("Gender is required.", ResultType.INVALID);
+        }
+
         return result;
     }
 }

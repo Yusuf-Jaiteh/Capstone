@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -51,6 +53,11 @@ class DriverJdbcTemplateRepositoryTest {
         driver.setLicenseNumber("GAM 900");
         driver.setNumberPlate("GAM 900");
         driver.setCarModel("Toyota");
+        driver.setDob(LocalDate.of(2000,2,12));
+        driver.setGender("male");
+        driver.setResidentialAddress("78 kombo sillah drive");
+        driver.setYearsOfExperience("07");
+        driver.setLicenseExpiryDate(LocalDate.of(2026,4,23));
 
         assertEquals(4, repository.add(driver).getDriverId());
     }

@@ -21,7 +21,7 @@ public class JwtConverter {
     private final SecretKey key = Jwts.SIG.HS256.key().build();
     // 2. "Configurable" constants
     private final String ISSUER = "library";
-    private final int EXPIRATION_MINUTES = 15;
+    private final int EXPIRATION_MINUTES = 234553559;
     private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
 
     public String getTokenFromUser(AppUser user) {

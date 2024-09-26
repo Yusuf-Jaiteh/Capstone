@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.util.List;
 
@@ -73,8 +74,10 @@ public class DriverJdbcTemplateRepository implements DriverRepository {
         }
 
         final String sql = """
-            insert into drivers (first_name, last_name, email, phone_number, license_number, car_model, number_plate)
-            values (?,?,?,?,?,?,?);
+            insert into drivers (first_name, last_name, email, phone_number, license_number, car_model, number_plate, 
+                
+                dob , gender, residential_address, years_of_experience, license_expiry_date)
+            values (?,?,?,?,?,?,?,?,?,?,?,?);
             """;
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -87,6 +90,11 @@ public class DriverJdbcTemplateRepository implements DriverRepository {
             ps.setString(5, driver.getLicenseNumber());
             ps.setString(6, driver.getCarModel());
             ps.setString(7, driver.getNumberPlate());
+            ps.setDate(8, Date.valueOf(driver.getDob()));
+            ps.setString(9, driver.getGender());
+            ps.setString(10, driver.getResidentialAddress());
+            ps.setString(11, driver.getYearsOfExperience());
+            ps.setDate(12, Date.valueOf(driver.getLicenseExpiryDate()));
             return ps;
         }, keyHolder);
 

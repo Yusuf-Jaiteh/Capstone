@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class AppointmentServiceTest {
         expected.setDriverId(1);
         expected.setPickUpLocation("Location A");
         expected.setDropOffLocation("Location B");
+
 
         when(repository.findById(expected.getAppointmentId())).thenReturn(expected);
 
@@ -111,6 +114,9 @@ public class AppointmentServiceTest {
         appointment.setDriverId(1);
         appointment.setPickUpLocation("Location A");
         appointment.setDropOffLocation("Location B");
+        appointment.setAppointmentDate(LocalDate.of(2026, 1, 1));
+        appointment.setStartTime(LocalTime.of(12, 0));
+        appointment.setEndTime(LocalTime.of(13, 0));
 
         Appointment expected = new Appointment();
         expected.setAppointmentId(1);
@@ -118,6 +124,9 @@ public class AppointmentServiceTest {
         expected.setDriverId(1);
         expected.setPickUpLocation("Location A");
         expected.setDropOffLocation("Location B");
+        expected.setAppointmentDate(LocalDate.of(2026, 1, 1));
+        expected.setStartTime(LocalTime.of(12, 0));
+        expected.setEndTime(LocalTime.of(13, 0));
 
         when(repository.add(appointment)).thenReturn(expected);
 
@@ -134,6 +143,9 @@ public class AppointmentServiceTest {
         appointment.setDriverId(1);
         appointment.setPickUpLocation("Location A");
         appointment.setDropOffLocation("Location B");
+        appointment.setAppointmentDate(LocalDate.of(2026, 1, 1));
+        appointment.setStartTime(LocalTime.of(12, 0));
+        appointment.setEndTime(LocalTime.of(13, 0));
 
         Result<Appointment> result = service.add(appointment);
         assertFalse(result.isSuccess());
@@ -148,6 +160,9 @@ public class AppointmentServiceTest {
         appointment.setDriverId(1);
         appointment.setPickUpLocation("Location A");
         appointment.setDropOffLocation("Location B");
+        appointment.setAppointmentDate(LocalDate.of(2026, 1, 1));
+        appointment.setStartTime(LocalTime.of(12, 0));
+        appointment.setEndTime(LocalTime.of(13, 0));
 
         when(repository.update(appointment)).thenReturn(true);
 
@@ -164,6 +179,9 @@ public class AppointmentServiceTest {
         appointment.setDriverId(1);
         appointment.setPickUpLocation("Location A");
         appointment.setDropOffLocation("Location B");
+        appointment.setAppointmentDate(LocalDate.of(2026, 1, 1));
+        appointment.setStartTime(LocalTime.of(12, 0));
+        appointment.setEndTime(LocalTime.of(13, 0));
 
         Result<Appointment> result = service.update(appointment);
         assertFalse(result.isSuccess());

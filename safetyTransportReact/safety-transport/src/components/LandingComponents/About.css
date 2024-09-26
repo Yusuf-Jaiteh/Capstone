@@ -1,0 +1,34 @@
+.about-container {
+    padding: 50px;
+    background-color: #f9f9f9;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #28a745; /* Set the border color to #28a745 */
+}
+
+.about-container h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #007bff; /* Set the text color for "About Us" to #007bff */
+}
+
+.about-container p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.about-container p strong {
+    color: #007bff;
+}
+
+.about-logo {
+    max-width: 10%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 10px;
+}

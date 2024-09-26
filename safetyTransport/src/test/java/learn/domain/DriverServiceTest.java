@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,6 +75,11 @@ class DriverServiceTest {
         driver.setLicenseNumber("123456789");
         driver.setCarModel("Toyota");
         driver.setNumberPlate("1234");
+        driver.setDob(LocalDate.of(1990, 1, 1));
+        driver.setGender("M");
+        driver.setResidentialAddress("1234 Main St");
+        driver.setYearsOfExperience("5");
+        driver.setLicenseExpiryDate(LocalDate.of(2025, 1, 1));
 
         Driver expected = new Driver();
         expected.setDriverId(1);
@@ -84,6 +90,11 @@ class DriverServiceTest {
         expected.setLicenseNumber("123456789");
         expected.setCarModel("Toyota");
         expected.setNumberPlate("1234");
+        expected.setDob(LocalDate.of(1990, 1, 1));
+        expected.setGender("M");
+        expected.setResidentialAddress("1234 Main St");
+        expected.setYearsOfExperience("5");
+        expected.setLicenseExpiryDate(LocalDate.of(2025, 1, 1));
 
         when(repository.add(driver)).thenReturn(expected);
 
@@ -100,6 +111,12 @@ class DriverServiceTest {
         driver.setLastName("Doe");
         driver.setEmail("john.doe@example.com");
         driver.setPhoneNumber("123456789");
+        driver.setDob(LocalDate.of(1990, 1, 1));
+        driver.setGender("M");
+        driver.setResidentialAddress("1234 Main St");
+        driver.setYearsOfExperience("5");
+        driver.setLicenseExpiryDate(LocalDate.of(2025, 1, 1));
+
 
         Result<Driver> result = service.add(driver);
         assertFalse(result.isSuccess());
@@ -117,6 +134,11 @@ class DriverServiceTest {
         driver.setLicenseNumber("123456789");
         driver.setCarModel("Toyota");
         driver.setNumberPlate("1234");
+        driver.setDob(LocalDate.of(1990, 1, 1));
+        driver.setGender("M");
+        driver.setResidentialAddress("1234 Main St");
+        driver.setYearsOfExperience("5");
+        driver.setLicenseExpiryDate(LocalDate.of(2025, 1, 1));
 
         when(repository.update(driver)).thenReturn(true);
 
@@ -136,6 +158,11 @@ class DriverServiceTest {
         driver.setLicenseNumber("123456789");
         driver.setCarModel("Toyota");
         driver.setNumberPlate("1234");
+        driver.setDob(LocalDate.of(1990, 1, 1));
+        driver.setGender("M");
+        driver.setResidentialAddress("1234 Main St");
+        driver.setYearsOfExperience("5");
+        driver.setLicenseExpiryDate(LocalDate.of(2025, 1, 1));
 
         Result<Driver> result = service.update(driver);
         assertFalse(result.isSuccess());

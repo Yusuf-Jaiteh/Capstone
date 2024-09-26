@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -59,6 +62,9 @@ class AppointmentJdbcTemplateRepositoryTest {
         appointment.setApproved(false);
         appointment.setCustomerId(1);
         appointment.setDriverId(1);
+        appointment.setAppointmentDate(LocalDate.of(2022,01,01));
+        appointment.setStartTime(LocalTime.of(12,00,00));
+        appointment.setEndTime(LocalTime.of(13,00,00));
 
         assertEquals(4, repository.add(appointment).getAppointmentId());
     }
@@ -69,6 +75,9 @@ class AppointmentJdbcTemplateRepositoryTest {
         appointment.setAppointmentId(2);
         appointment.setPickUpLocation("Serrekunda");
         appointment.setDropOffLocation("Bakau");
+        appointment.setAppointmentDate(LocalDate.of(2022,01,01));
+        appointment.setStartTime(LocalTime.of(12,00,00));
+        appointment.setEndTime(LocalTime.of(13,00,00));
         appointment.setApproved(true);
         appointment.setCustomerId(1);
         appointment.setDriverId(1);
@@ -82,6 +91,9 @@ class AppointmentJdbcTemplateRepositoryTest {
         appointment.setAppointmentId(1000);
         appointment.setPickUpLocation("Serrekunda");
         appointment.setDropOffLocation("Bakau");
+        appointment.setAppointmentDate(LocalDate.of(2022,01,01));
+        appointment.setStartTime(LocalTime.of(12,00,00));
+        appointment.setEndTime(LocalTime.of(13,00,00));
         appointment.setApproved(true);
         appointment.setCustomerId(1);
         appointment.setDriverId(1);

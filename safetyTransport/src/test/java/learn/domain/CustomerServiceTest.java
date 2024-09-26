@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -75,6 +76,8 @@ class CustomerServiceTest {
         customer.setLastName("Doe");
         customer.setEmail("john.doe@example.com");
         customer.setPhoneNumber("123456789");
+        customer.setDob(LocalDate.of(1990, 1, 1));
+        customer.setGender("M");
 
         Customer expected = new Customer();
         expected.setCustomerId(1);
@@ -82,6 +85,8 @@ class CustomerServiceTest {
         expected.setLastName("Doe");
         expected.setEmail("john.doe@example.com");
         expected.setPhoneNumber("123456789");
+        expected.setDob(LocalDate.of(1990, 1, 1));
+        expected.setGender("M");
 
         when(repository.add(customer)).thenReturn(expected);
 
@@ -112,6 +117,8 @@ class CustomerServiceTest {
         customer.setLastName("Doe");
         customer.setEmail("john.doe@example.com");
         customer.setPhoneNumber("123456789");
+        customer.setDob(LocalDate.of(1990, 1, 1));
+        customer.setGender("M");
 
         when(repository.update(customer)).thenReturn(true);
 

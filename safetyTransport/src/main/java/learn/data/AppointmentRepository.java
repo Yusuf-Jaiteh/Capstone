@@ -2,6 +2,8 @@ package learn.data;
 
 import learn.models.Appointment;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface AppointmentRepository {
@@ -14,4 +16,5 @@ public interface AppointmentRepository {
     List<Appointment> findByCustomerId(int customerId);
 
     List<Appointment> findByDriverId(int driverId);
+    List<Appointment> findByDriverIdAndDateAndTime(int driverId, LocalDate date, LocalTime startTime, LocalTime endTime);
 }

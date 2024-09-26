@@ -20,6 +20,11 @@ public class DriverMapper implements RowMapper<Driver> {
         driver.setLicenseNumber(rs.getString("license_number"));
         driver.setCarModel(rs.getString("car_model"));
         driver.setNumberPlate(rs.getString("number_plate"));
+        driver.setDob(rs.getDate("dob").toLocalDate());
+        driver.setGender(rs.getString("gender"));
+        driver.setResidentialAddress(rs.getString("residential_address"));
+        driver.setYearsOfExperience(rs.getString("years_of_experience"));
+        driver.setLicenseExpiryDate(rs.getDate("license_expiry_date").toLocalDate());
 
         return driver;
     }

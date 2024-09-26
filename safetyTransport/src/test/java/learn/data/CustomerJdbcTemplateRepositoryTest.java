@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,6 +53,8 @@ class CustomerJdbcTemplateRepositoryTest {
         customer.setLastName("Test");
         customer.setEmail("kdgh@gmailcom");
         customer.setPhoneNumber("123456789");
+        customer.setDob(LocalDate.of(1999, 12, 12));
+        customer.setGender("female");
         assertNotNull(repository.add(customer));
     }
 
@@ -65,6 +68,8 @@ class CustomerJdbcTemplateRepositoryTest {
         customer.setLastName("Mbenga");
         customer.setEmail("mbengam55@gmail.com");
         customer.setPhoneNumber("+220-999-9999");
+        customer.setDob(LocalDate.of(1999, 12, 12));
+        customer.setGender("female");
         assertTrue(repository.update(customer));
     }
 
@@ -74,6 +79,7 @@ class CustomerJdbcTemplateRepositoryTest {
         customer.setCustomerId(10);
         customer.setFirstName("Yusuf");
         customer.setLastName("Mbenga");
+        customer.setDob(LocalDate.of(2000,2,12));
         assertFalse(repository.update(customer));
     }
 

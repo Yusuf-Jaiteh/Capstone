@@ -14,7 +14,7 @@ public class AppUser implements UserDetails {
     private String username;
     private String password;
     private boolean enabled = true;
-    private boolean locked = false;
+    private boolean locked;
     private List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
     public int getAppUserId() {
@@ -69,7 +69,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !locked;
+        return true;
     }
 
     @Override

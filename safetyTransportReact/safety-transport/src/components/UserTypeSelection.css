@@ -1,0 +1,59 @@
+.user-type-selection {
+    text-align: center;
+    margin: 50px auto;
+    padding: 40px;
+    max-width: 700px;
+    border: 2px solid #007bff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #f9f9f9;
+}
+
+.user-type-selection h1 {
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    color: #007bff;
+}
+
+.user-type-selection p {
+    margin-bottom: 30px;
+    font-size: 1.5em;
+    color: #555;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px; /* Adds space between the buttons */
+}
+
+.user-type-button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Driver Button Style */
+.user-type-button:first-child {
+    background-color: #28a745; /* Green */
+    color: #fff;
+}
+
+.user-type-button:first-child:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05);
+}
+
+/* Customer Button Style */
+.user-type-button:last-child {
+    background-color: #17a2b8; /* Cyan */
+    color: #fff;
+}
+
+.user-type-button:last-child:hover {
+    background-color: #138496; /* Darker cyan on hover */
+    transform: scale(1.05);
+}

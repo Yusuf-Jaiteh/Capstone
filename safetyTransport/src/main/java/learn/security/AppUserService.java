@@ -91,7 +91,7 @@ public class AppUserService implements UserDetailsService {
         Result<AppUser> result = validate(user);
 
         if (user.getAppUserId() <= 0) {
-            result.addMessage("Driver ID must be set.", ResultType.INVALID);
+            result.addMessage("AppUser ID must be set.", ResultType.INVALID);
         }
 
         if (!result.isSuccess()) {

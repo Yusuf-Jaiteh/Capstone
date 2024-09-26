@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,15 +30,17 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtConverter jwtConverter;
     private final PasswordEncoder encoder;
-    private final AppUserService AppUserService;
+    private final AppUserService appUserService;
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     public AuthController(AuthenticationManager authenticationManager,
                           JwtConverter jwtConverter,
-                          PasswordEncoder encoder, learn.security.AppUserService appUserService) {
+                          PasswordEncoder encoder, AppUserService appUserService) {
         this.authenticationManager = authenticationManager;
         this.jwtConverter = jwtConverter;
         this.encoder = encoder;
-        AppUserService = appUserService;
+        this.appUserService = appUserService;
     }
 
     @PostMapping("/login")
@@ -45,23 +51,37 @@ public class AuthController {
 
         try {
             Authentication authentication = authenticationManager.authenticate(token);
-            if(authentication.isAuthenticated()) {
+            if (authentication.isAuthenticated()) {
                 AppUser appUser = (AppUser) authentication.getPrincipal();
+                String role = appUser.getAuthorities().stream()
+                        .map(authority -> authority.getAuthority())
+                        .findFirst()
+                        .orElse("ROLE_USER");
                 return new ResponseEntity<>(
-                        Map.of("jwt", jwtConverter.getTokenFromUser(appUser)),
+                        Map.of("jwt", jwtConverter.getTokenFromUser(appUser), "userId", String.valueOf(appUser.getAppUserId()),
+                                "role", role),
                         HttpStatus.OK);
             }
-        } catch(AuthenticationException ex) {
+        } catch (AuthenticationException ex) {
+            logger.info("Attempting to authenticate user: {}", user.getUsername());
+            logger.info("Authentication successful for user: {}", user.getUsername());
+            logger.error("Authentication failed for user: {}", user.getUsername(), ex);
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
+        logger.info("Attempting to authenticate user: {}", user.getUsername());
+        logger.info("Authentication successful for user: {}", user.getUsername());
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<Map<String, String>> refresh(@AuthenticationPrincipal AppUser user) {
+        String role = user.getAuthorities().stream()
+                .map(authority -> authority.getAuthority())
+                .findFirst()
+                .orElse("ROLE_USER");
         return new ResponseEntity<>(
-                Map.of("jwt", jwtConverter.getTokenFromUser(user)),
+                Map.of("jwt", jwtConverter.getTokenFromUser(user), "userId", String.valueOf(user.getAppUserId()),"role", role),
                 HttpStatus.OK);
     }
 
@@ -75,24 +95,37 @@ public class AuthController {
         String firstName = registrationDetails.get("firstName");
         String lastName = registrationDetails.get("lastName");
         String username = registrationDetails.get("username");
+        String authorities = registrationDetails.get("authorities");
         String password = registrationDetails.get("password");
-        String confirmPassword = registrationDetails.get("confirmPassword");
+        String email = registrationDetails.get("email");
+        String phoneNumber = registrationDetails.get("phoneNumber");
+        String licenseNumber = registrationDetails.get("licenseNumber");
+        String carModel = registrationDetails.get("carModel");
+        String numberPlate = registrationDetails.get("numberPlate");
+        String dob = registrationDetails.get("dob");
+        String gender = registrationDetails.get("gender");
+        String residentialAddress = registrationDetails.get("residentialAddress");
+        String yearsOfExperience = registrationDetails.get("yearsOfExperience");
+        String licenseExpiryDate = registrationDetails.get("licenseExpiryDate");
+
         AppUser user = new AppUser();
         user.setUsername(username);
         user.setPassword(password);
-        //user.setConfirmPassword(confirmPassword);
+        user.setAuthorities(List.of(authorities));
+        user.setEnabled(true);
+        user.setLocked(false);
 
-
-        // Register user
-        Result<AppUser> result = AppUserService.add(user);
+        Result<AppUser> result = appUserService.add(user);
         if (result.isSuccess()) {
-            // Authenticate user
             AppUser appUser = result.getPayload();
             String jwt = jwtConverter.getTokenFromUser(appUser);
-            return ResponseEntity.ok(Map.of("jwt", jwt));
+            String role = appUser.getAuthorities().stream()
+                    .map(authority -> authority.getAuthority())
+                    .findFirst()
+                    .orElse("ROLE_USER");
+            return ResponseEntity.ok(Map.of("jwt", jwt, "userId", String.valueOf(appUser.getAppUserId()),"role", role));
         } else {
             return ResponseEntity.badRequest().body(Map.of("errors", String.join(", ", result.getMessages())));
         }
     }
-
 }

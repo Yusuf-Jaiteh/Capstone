@@ -71,8 +71,8 @@ public class CustomerJdbcTemplateRepository implements CustomerRepository {
     public Customer add(Customer customer) {
 
         final String sql = """
-            insert into customers (first_name, last_name, email, phone_number)
-            values (?,?,?,?);
+            insert into customers (first_name, last_name, email, phone_number, dob, gender)
+            values (?,?,?,?,?,?);
             """;
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -81,6 +81,9 @@ public class CustomerJdbcTemplateRepository implements CustomerRepository {
             ps.setString(2, customer.getLastName());
             ps.setString(3, customer.getEmail());
             ps.setString(4, customer.getPhoneNumber());
+            ps.setString(5, customer.getDob().toString());
+            ps.setString(6, customer.getGender());
+
             return ps;
         }, keyHolder);
 
@@ -99,7 +102,9 @@ public class CustomerJdbcTemplateRepository implements CustomerRepository {
             first_name = ?,
             last_name = ?,
             email = ?,
-            phone_number = ?
+            phone_number = ?,
+            dob = ?,
+            gender = ?
             where customer_id = ?;
             """;
         return jdbcTemplate.update(sql,
@@ -107,6 +112,8 @@ public class CustomerJdbcTemplateRepository implements CustomerRepository {
                 customer.getLastName(),
                 customer.getEmail(),
                 customer.getPhoneNumber(),
+                customer.getDob().toString(),
+                customer.getGender(),
                 customer.getCustomerId()) > 0;
     }
 

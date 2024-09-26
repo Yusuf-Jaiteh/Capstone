@@ -105,6 +105,38 @@ public class DriverService {
             result.addMessage("Email is required.", ResultType.INVALID);
         }
 
+        if (driver.getPhoneNumber() == null || driver.getPhoneNumber().isBlank()) {
+            result.addMessage("Phone Number is required.", ResultType.INVALID);
+        }
+
+        if (driver.getDob() == null) {
+            result.addMessage("Date of Birth is required.", ResultType.INVALID);
+        }
+
+        if (driver.getDob() != null && driver.getDob().isAfter(java.time.LocalDate.now())) {
+            result.addMessage("Date of Birth cannot be in the future.", ResultType.INVALID);
+        }
+
+        if (driver.getGender() == null || driver.getGender().isBlank()) {
+            result.addMessage("Gender is required.", ResultType.INVALID);
+        }
+
+        if (driver.getResidentialAddress() == null || driver.getResidentialAddress().isBlank()) {
+            result.addMessage("Residential Address is required.", ResultType.INVALID);
+        }
+
+        if (driver.getYearsOfExperience() == null || driver.getYearsOfExperience().isBlank()) {
+            result.addMessage("Years of Experience is required.", ResultType.INVALID);
+        }
+
+        if (Integer.valueOf(driver.getYearsOfExperience()) < 5) {
+            result.addMessage("Years of Experience must be at least 5.", ResultType.INVALID);
+        }
+
+        if (driver.getLicenseExpiryDate() == null) {
+            result.addMessage("License Expiry Date is required.", ResultType.INVALID);
+        }
+
         return result;
     }
 

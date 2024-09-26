@@ -1,5 +1,6 @@
 package learn.models;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Driver {
@@ -13,11 +14,17 @@ public class Driver {
     private String carModel;
     private String numberPlate;
     private List<Appointment> appointments;
+    private LocalDate dob;
+    private String gender;
+    private String residentialAddress;
+    private String yearsOfExperience;
+    private LocalDate licenseExpiryDate;
 
     public Driver() {
     }
 
-    public Driver(int driverId, String firstName, String lastName, String email, String phoneNumber, String licenseNumber, String carModel, String numberPlate, List<Appointment> appointments) {
+    public Driver(int driverId, String firstName, String lastName, String email, String phoneNumber, String licenseNumber, String carModel, String numberPlate, List<Appointment> appointments,
+                  LocalDate dob, String gender, String residentialAddress, String yearsOfExperience, LocalDate licenseExpiryDate) {
         this.driverId = driverId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,6 +34,11 @@ public class Driver {
         this.carModel = carModel;
         this.numberPlate = numberPlate;
         this.appointments = appointments;
+        this.dob = dob;
+        this.gender = gender;
+        this.residentialAddress = residentialAddress;
+        this.yearsOfExperience = yearsOfExperience;
+        this.licenseExpiryDate = licenseExpiryDate;
     }
 
     public int getDriverId() {
@@ -99,6 +111,46 @@ public class Driver {
 
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public LocalDate getDob() {
+        return dob;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getResidentialAddress() {
+        return residentialAddress;
+    }
+
+    public void setResidentialAddress(String residentialAddress) {
+        this.residentialAddress = residentialAddress;
+    }
+
+    public String getYearsOfExperience() {
+        return yearsOfExperience;
+    }
+
+    public void setYearsOfExperience(String yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
+    }
+
+    public LocalDate getLicenseExpiryDate() {
+        return licenseExpiryDate;
+    }
+
+    public void setLicenseExpiryDate(LocalDate licenseExpiryDate) {
+        this.licenseExpiryDate = licenseExpiryDate;
     }
 
 }

@@ -19,6 +19,9 @@ public class AppointmentMapper implements RowMapper<Appointment> {
         appointment.setApproved(rs.getBoolean("approved"));
         appointment.setPickUpLocation(rs.getString("pickup_location"));
         appointment.setDropOffLocation(rs.getString("dropoff_location"));
+        appointment.setAppointmentDate(rs.getDate("appointment_date").toLocalDate());
+        appointment.setStartTime(rs.getTime("start_time").toLocalTime());
+        appointment.setEndTime(rs.getTime("end_time").toLocalTime());
 
         return appointment;
     }

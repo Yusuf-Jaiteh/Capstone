@@ -1,5 +1,8 @@
 package learn.models;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Appointment {
 
     private int appointmentId;
@@ -8,17 +11,24 @@ public class Appointment {
     private boolean approved;
     private String pickUpLocation;
     private String dropOffLocation;
-    //startTime,endTime
+    private LocalDate appointmentDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
+
     public Appointment() {
     }
 
-    public Appointment(int appointmentId, int driverId, int customerId, boolean approved, String pickUpLocation, String dropOffLocation) {
+    public Appointment(int appointmentId, int driverId, int customerId, boolean approved, String pickUpLocation, String dropOffLocation,
+                       LocalDate appointmentDate, LocalTime startTime, LocalTime endTime) {
         this.appointmentId = appointmentId;
         this.driverId = driverId;
         this.customerId = customerId;
         this.approved = approved;
         this.pickUpLocation = pickUpLocation;
         this.dropOffLocation = dropOffLocation;
+        this.appointmentDate = appointmentDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public int getAppointmentId() {
@@ -69,4 +79,27 @@ public class Appointment {
         this.dropOffLocation = dropOffLocation;
     }
 
+    public LocalDate getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(LocalDate appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
 }

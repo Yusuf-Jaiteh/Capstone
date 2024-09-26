@@ -1,5 +1,6 @@
 package learn.models;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Customer {
@@ -10,17 +11,21 @@ public class Customer {
     private String email;
     private String phoneNumber;
     private List<Appointment> appointments;
+    private LocalDate dob;
+    private String gender;
 
     public Customer() {
     }
 
-    public Customer(int customerId, String firstName, String lastName, String email, String phoneNumber, List<Appointment> appointments) {
+    public Customer(int customerId, String firstName, String lastName, String email, String phoneNumber, List<Appointment> appointments, LocalDate  dob, String gender) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.appointments = appointments;
+        this.dob = dob;
+        this.gender = gender;
     }
 
     public int getCustomerId() {
@@ -69,6 +74,22 @@ public class Customer {
 
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public LocalDate getDob() {
+        return dob;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
 }
