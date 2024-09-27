@@ -1,4 +1,3 @@
-// DriverDashboard.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
@@ -11,6 +10,22 @@ function DriverDashboard() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
+    const [reviews, setReviews] = useState([]); 
+    const [loadingReviews, setLoadingReviews] = useState(false); 
+    const [reviewsError, setReviewsError] = useState(null); 
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false); 
+    
+
+    const ReviewCard = ({ review }) => {
+        return (
+            <div className="review-card">
+                <p><strong>Review By:</strong> {review.customer?.firstName} {review.customer?.lastName}</p>
+                <p><strong>Reviewer's Contact:</strong> {review.customer?.phoneNumber}</p>
+                <p><strong>Ratings:</strong> {review.rating} / 5</p>
+                <p><strong>Comments:</strong> {review.reviewText}</p>
+            </div>
+        );
+    };
 
     useEffect(() => {
         if (userId) {
@@ -57,6 +72,44 @@ function DriverDashboard() {
         }
     };
 
+    const fetchReviews = async () => {
+        setLoadingReviews(true);
+        setReviewsError(null);
+
+        try {
+            console.log('Fetching reviews for driver ID:', userId); 
+            const response = await axios.get(`http://localhost:8080/api/reviews/driver/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log('Reviews fetched successfully:', response.data);
+            setReviews(response.data);
+            setLoadingReviews(false);
+            setIsNotificationOpen(true); 
+
+            const customerPromises = response.data.map(async (review) => {
+                const customerResponse = await axios.get(`http://localhost:8080/api/customer/${review.customerId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                console.log('customer response:', customerResponse.data);
+                return { ...review, customer: customerResponse.data }; // Associate customer details with the review
+            });
+            const reviewsWithCustomerDetails = await Promise.all(customerPromises);
+            setReviews(reviewsWithCustomerDetails);
+
+            console.log('Updated reviews state with customer details:', reviewsWithCustomerDetails);
+
+        } catch (error) {
+            console.error('Error fetching reviews:', error);
+            setReviewsError(error);
+            setLoadingReviews(false);
+            setIsNotificationOpen(true); 
+        }
+    };
+
     useEffect(() => {
         if (successMessage) {
             const timer = setTimeout(() => {
@@ -66,6 +119,17 @@ function DriverDashboard() {
             return () => clearTimeout(timer);
         }
     }, [successMessage]);
+
+   
+    useEffect(() => {
+        if (isNotificationOpen) {
+            const timer = setTimeout(() => {
+                setIsNotificationOpen(false);
+            }, 5000); 
+
+            return () => clearTimeout(timer);
+        }
+    }, [isNotificationOpen]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -88,7 +152,7 @@ function DriverDashboard() {
                             <li><a href="#appointments">Appointments</a></li>
                             <li><a href="#profile">Profile</a></li>
                             <li><a href="#settings">Settings</a></li>
-                            <li><a href="#view-reviews">View Reviews</a></li>
+                            <li><a href="#view-reviews" onClick={fetchReviews}>View Reviews</a></li> 
                         </ul>
                     </nav>
                 </div>
@@ -124,6 +188,24 @@ function DriverDashboard() {
                     </ul>
                 </div>
             </div>
+
+            
+            {isNotificationOpen && (
+                <div className="notification">
+                    <div className="notification-content">
+                        <h2>My Reviews</h2>
+                        {loadingReviews && <div>Loading reviews...</div>}
+                        {reviewsError && <div>Error: {reviewsError.message}</div>}
+                        {!loadingReviews && reviews.length === 0 && <div>No reviews available for you.</div>}
+                        <div>
+                            {reviews.map(review => (
+                                <ReviewCard key={review.reviewId} review={review} />
+                            ))}
+                        </div>
+                        <button onClick={() => setIsNotificationOpen(false)}>Close</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
